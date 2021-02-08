@@ -1,0 +1,23 @@
+{
+  "name": "rd9-scraper",
+  "version": "1.0.0",
+  "description": "please let me now when it's available!",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --trace-warnings index.js",
+    "dev" : ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxwolfs/rd9-scraper.git"
+  },
+  "author": "maxwolfs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxwolfs/rd9-scraper/issues"
+  },
+  "homepage": "https://github.com/maxwolfs/rd9-scraper#readme",
+  "dependencies": {
+    "puppeteer": "^7.0.1"
+  }
+}
