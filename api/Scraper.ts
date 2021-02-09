@@ -2,14 +2,9 @@ require('dotenv').config();
 const puppeteer = require('puppeteer');
 const { Telegraf } = require('telegraf');
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.launch();
-
-setInterval(function () {
-    scrapeProduct('https://www.thomann.de/de/behringer_rd_9.htm');
-}, 20000);
-
-async function scrapeProduct(url) {
+export async function Scraper(url) {
+    const bot = new Telegraf(process.env.BOT_TOKEN);
+    bot.launch();
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url)
@@ -27,9 +22,15 @@ async function scrapeProduct(url) {
     const src = await page.evaluate(() => {return document.querySelector('span[class="primary"]')});
 
     if (src !== null) {
-        value = await page.evaluate(() => {
-            return document.querySelector('span[class="primary"]').innerText.slice(0, -2)
-        })
+
+
+        // const value = await page.evaluate(() => {
+        //      return document.querySelector('span[class="primary"]').innerText.slice(0, -2)
+        // })
+
+        const value = await page.$eval('span[class="primary"]', node => (<HTMLElement>node).innerText.slice(0,-2));
+
+
         await sendMessage(value)
             
     } else {
@@ -44,3 +45,4 @@ async function scrapeProduct(url) {
     await browser.close();
 }
 
+export default Scraper;
