@@ -7,7 +7,7 @@ bot.launch();
 
 setInterval(function () {
     scrapeProduct('https://www.thomann.de/de/behringer_rd_9.htm');
-}, 10000);
+}, 20000);
 
 async function scrapeProduct(url) {
     const browser = await puppeteer.launch();
@@ -34,9 +34,9 @@ async function scrapeProduct(url) {
             
     } else {
         // send to public group
-        // bot.telegram.sendMessage('-432915557', "... still waiting ...");
+        bot.telegram.sendMessage('-432915557', "... still waiting ...");
         // send to public channel
-        // bot.telegram.sendMessage('@behringer_rd9_release', "... still waiting ...");
+        bot.telegram.sendMessage('@behringer_rd9_release', "... still waiting ...");
         // console.log("... still waiting ...");
     }
     }   
