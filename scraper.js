@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.launch();
 
 setInterval(function () {
-    scrapeProduct('https://www.thomann.de/de/behringer_rd_6.htm');
+    scrapeProduct('https://www.thomann.de/de/behringer_rd_9.htm');
 }, 10000);
 
 async function scrapeProduct(url) {
@@ -34,9 +34,9 @@ async function scrapeProduct(url) {
             
     } else {
         // send to public group
-        bot.telegram.sendMessage('-432915557', "... still waiting ...");
-        // send to public channel
-        bot.telegram.sendMessage('@behringer_rd9_release', "... still waiting ...");
+        // bot.telegram.sendMessage('-432915557', "... still waiting ...");
+        // // send to public channel
+        // bot.telegram.sendMessage('@behringer_rd9_release', "... still waiting ...");
         console.log("... still waiting ...");
     }
     }   
