@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.launch();
 
 setInterval(function () {
-    scrapeProduct('https://www.thomann.de/de/behringer_rd_9.htm');
+    scrapeProduct('https://www.thomann.de/de/behringer_rd_6.htm');
 }, 10000);
 
 async function scrapeProduct(url) {
