@@ -7,7 +7,7 @@ bot.launch();
 
 setInterval(function () {
     scrapeProduct('https://www.thomann.de/de/behringer_rd_9.htm');
-}, 20000);
+}, 10000);
 
 async function scrapeProduct(url) {
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
