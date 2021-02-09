@@ -19,7 +19,7 @@ async function scrapeProduct(url) {
         bot.telegram.sendMessage('-432915557', '🎉 Released – And its only ' + value + '€ at ' + url);
         // send to public channel
         bot.telegram.sendMessage('@behringer_rd9_release', '🎉 Released – And its only ' + value + '€ at ' + url);
-        // console.log('🎉 Released – And its only ' + value + '€ at ' + url)  
+        console.log('🎉 Released – And its only ' + value + '€ at ' + url)  
 
     }
 
@@ -37,7 +37,7 @@ async function scrapeProduct(url) {
         bot.telegram.sendMessage('-432915557', "... still waiting ...");
         // send to public channel
         bot.telegram.sendMessage('@behringer_rd9_release', "... still waiting ...");
-        // console.log("... still waiting ...");
+        console.log("... still waiting ...");
     }
     }   
     await getPrice();
