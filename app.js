@@ -6,10 +6,6 @@ const puppeteer = require('puppeteer');
 const { Telegraf } = require('telegraf');
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
-app.get('/', (req, res) => {
-    res.send('... initializing')
-})
-
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${PORT}`);
 });
