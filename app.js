@@ -1,5 +1,5 @@
 require('dotenv').config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const express = require('express');
 const app = express();
 const puppeteer = require('puppeteer');
@@ -7,8 +7,15 @@ const { Telegraf } = require('telegraf');
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('... initializing')
 })
+
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${PORT}`);
+});
+
+const bot = new Telegraf(process.env.BOT_TOKEN);
+bot.launch();
 
 const scheduler = new ToadScheduler()
 
@@ -18,8 +25,6 @@ const job = new SimpleIntervalJob({ seconds: 10, }, rd9Alarm)
 scheduler.addSimpleIntervalJob(job)
 
 async function scrapeProduct(url) {
-    const bot = new Telegraf(process.env.BOT_TOKEN);
-    bot.launch();
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto(url)
@@ -38,6 +43,9 @@ async function scrapeProduct(url) {
             
     } else {
         console.log("... still waiting ...");
+        app.get('/', (req, res) => {
+            res.send('... still waiting ...')
+        })
         }
     } 
 
@@ -46,6 +54,9 @@ async function scrapeProduct(url) {
         // send to public channel
         bot.telegram.sendMessage('@behringer_rd9_release', msg);
         console.log(msg);
+        app.get('/', (req, res) => {
+            res.send(msg)
+        })
     }  
 }
 
