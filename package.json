@@ -4,7 +4,6 @@
   "description": "please let me now when it's available!",
   "main": "index.js",
   "scripts": {
-    "test": "node --trace-warnings scraper.js",
     "start": "NODE_ENV=production node scraper.js"
   },
   "repository": {
@@ -20,6 +19,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "puppeteer": "^7.0.1",
-    "telegraf": "^4.0.3"
+    "telegraf": "^4.0.3",
+    "toad-scheduler": "^1.0.2"
   }
 }
