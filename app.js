@@ -17,7 +17,6 @@ const scheduler = new ToadScheduler();
 
 const productUrl =
     "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01";
-const domElement = 'button[data-product-size="S"]';
 
 const productAlarm = new Task("simple task", () => {
     scrapeProduct(productUrl);
@@ -37,7 +36,7 @@ async function scrapeProduct(url) {
 
         async function checkAvailability() {
             const src = await page.evaluate(() => {
-                return document.querySelector(domElement);
+                return document.querySelector('button[data-product-size="S"]');
             });
 
             if (src !== null) {
