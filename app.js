@@ -44,7 +44,6 @@ async function scrapeProduct(url) {
             } else {
                 const msg = "🚳";
                 console.log(msg);
-                bot.telegram.sendMessage("@ultimateMalle", msg);
                 app.get("/", (req, res) => {
                     res.send("🚳");
                 });
