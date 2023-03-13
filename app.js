@@ -8,11 +8,7 @@ const socketio = require("socket.io");
 const puppeteer = require("puppeteer");
 const { Telegraf } = require("telegraf");
 const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
-const {
-    formatTimeDiff,
-    getTotalLogs,
-    getFirstLogTimestamp,
-} = require("./helpers");
+const { getTotalLogs, getFirstLogTimestamp } = require("./helpers");
 
 // serve static files from the public directory
 app.use(express.static("public"));
@@ -58,7 +54,14 @@ scheduler.addSimpleIntervalJob(job);
 
 async function scrapeProduct(url) {
     try {
-        const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+        let revisionInfo = await browserFetcher.download("1095492");
+
+        const browser = await puppeteer.launch({
+            executablePath: revisionInfo.executablePath,
+            ignoreDefaultArgs: ["--disable-extensions"],
+            headless: true,
+            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+        });
         const page = await browser.newPage();
         await page.goto(url);
 
