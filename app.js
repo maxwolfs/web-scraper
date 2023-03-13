@@ -51,7 +51,7 @@ async function scrapeProduct(url) {
         }
 
         async function sendMessage() {
-            const msg = "🎉 Released! – Go shop it for at " + productUrl;
+            const msg = "🎉 Released! – Go shop it for at " + url;
             // send to public channel
             bot.telegram.sendMessage("@ultimateMalle", msg);
             console.log(msg);
