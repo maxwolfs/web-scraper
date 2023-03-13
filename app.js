@@ -1,40 +1,61 @@
+require("dotenv").config();
+const PORT = process.env.PORT || 3001;
+const express = require("express");
+const app = express();
 const puppeteer = require("puppeteer");
-const TelegramBot = require("node-telegram-bot-api");
+const { Telegraf } = require("telegraf");
+const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
 
-// Replace with your Telegram bot API token
-const telegramToken = process.env.BOT_TOKEN;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${PORT}`);
+});
 
-// Replace with the chat or channel ID you want to send messages to
-const chatId = "YOUR_CHAT_ID";
+const bot = new Telegraf(process.env.BOT_TOKEN);
+bot.launch();
 
-// URL of the page to scrape
-const url =
+const scheduler = new ToadScheduler();
+
+const productUrl =
     "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01";
+const domElement = 'button[data-product-size="S"]';
 
-// Interval between each request in milliseconds (10 seconds)
-const interval = 10000;
+const productAlarm = new Task("simple task", () => {
+    scrapeProduct(productUrl);
+});
+const job = new SimpleIntervalJob({ seconds: 10 }, productAlarm);
 
-// Initialize the Telegram bot
-const bot = new TelegramBot(telegramToken, { polling: false });
+scheduler.addSimpleIntervalJob(job);
 
-// Function to check if the button is available
-async function checkAvailability() {
-    try {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(url);
-        const button = await page.$('button[data-product-size="S"]');
-        if (button) {
-            // Button is available, send a message to the Telegram channel
-            bot.sendMessage(chatId, "🚲");
+async function scrapeProduct(url) {
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    await getPrice();
+    await browser.close();
+
+    async function getPrice() {
+        const src = await page.evaluate(() => {
+            return document.querySelector(domElement);
+        });
+
+        if (src !== null) {
+            await sendMessage("🚲");
         } else {
             console.log("🚳");
+            app.get("/", (req, res) => {
+                res.send("🚳");
+            });
         }
-        await browser.close();
-    } catch (error) {
-        console.error(error);
+    }
+
+    async function sendMessage(value) {
+        const msg = "🎉 Released! – Go shop it for at " + productUrl;
+        // send to public channel
+        bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
+        console.log(msg);
+        app.get("/", (req, res) => {
+            res.send(msg);
+        });
     }
 }
-
-// Call the checkAvailability function every interval milliseconds
-setInterval(checkAvailability, interval);
