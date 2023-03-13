@@ -42,8 +42,8 @@ async function scrapeProduct(url) {
             if (src !== null) {
                 await sendMessage("🚲");
             } else {
-                console.log("🚳");
                 const msg = "🚳";
+                console.log(msg);
                 bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
                 app.get("/", (req, res) => {
                     res.send("🚳");
