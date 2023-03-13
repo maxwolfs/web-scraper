@@ -21,7 +21,7 @@ const productUrl =
 const productAlarm = new Task("simple task", () => {
     scrapeProduct(productUrl);
 });
-const job = new SimpleIntervalJob({ seconds: 10 }, productAlarm);
+const job = new SimpleIntervalJob({ seconds: 60 }, productAlarm);
 
 scheduler.addSimpleIntervalJob(job);
 
