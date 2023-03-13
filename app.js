@@ -27,35 +27,39 @@ const job = new SimpleIntervalJob({ seconds: 10 }, productAlarm);
 scheduler.addSimpleIntervalJob(job);
 
 async function scrapeProduct(url) {
-    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-    const page = await browser.newPage();
-    await page.goto(url);
+    try {
+        const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+        const page = await browser.newPage();
+        await page.goto(url);
 
-    await getPrice();
-    await browser.close();
+        await checkAvailability();
+        await browser.close();
 
-    async function getPrice() {
-        const src = await page.evaluate(() => {
-            return document.querySelector(domElement);
-        });
+        async function checkAvailability() {
+            const src = await page.evaluate(() => {
+                return document.querySelector(domElement);
+            });
 
-        if (src !== null) {
-            await sendMessage("🚲");
-        } else {
-            console.log("🚳");
+            if (src !== null) {
+                await sendMessage("🚲");
+            } else {
+                console.log("🚳");
+                app.get("/", (req, res) => {
+                    res.send("🚳");
+                });
+            }
+        }
+
+        async function sendMessage() {
+            const msg = "🎉 Released! – Go shop it for at " + productUrl;
+            // send to public channel
+            bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
+            console.log(msg);
             app.get("/", (req, res) => {
-                res.send("🚳");
+                res.send(msg);
             });
         }
-    }
-
-    async function sendMessage(value) {
-        const msg = "🎉 Released! – Go shop it for at " + productUrl;
-        // send to public channel
-        bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
-        console.log(msg);
-        app.get("/", (req, res) => {
-            res.send(msg);
-        });
+    } catch (err) {
+        console.error(err);
     }
 }
