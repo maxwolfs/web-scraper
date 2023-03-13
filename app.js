@@ -54,6 +54,8 @@ scheduler.addSimpleIntervalJob(job);
 
 async function scrapeProduct(url) {
     try {
+        const browserFetcher = puppeteer.createBrowserFetcher();
+
         let revisionInfo = await browserFetcher.download("1095492");
 
         const browser = await puppeteer.launch({
