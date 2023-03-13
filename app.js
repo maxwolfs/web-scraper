@@ -44,7 +44,7 @@ async function scrapeProduct(url) {
             } else {
                 const msg = "🚳";
                 console.log(msg);
-                bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
+                bot.telegram.sendMessage("@ultimateMalle", msg);
                 app.get("/", (req, res) => {
                     res.send("🚳");
                 });
@@ -54,7 +54,7 @@ async function scrapeProduct(url) {
         async function sendMessage() {
             const msg = "🎉 Released! – Go shop it for at " + productUrl;
             // send to public channel
-            bot.telegram.sendMessage("@CanyonUltimateCFSL7eTapSBlackSnow", msg);
+            bot.telegram.sendMessage("@ultimateMalle", msg);
             console.log(msg);
             app.get("/", (req, res) => {
                 res.send(msg);
