@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log Viewer</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="box">
+                <p>Attempts</p>
+                <div id="count"></div>
+            </div>
+            <div class="box">
+                <p>Started</p>
+                <div id="duration"></div>
+            </div>
+            <div class="box">
+                <p>Target</p>
+                <span
+                    ><a
+                        href="https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01"
+                        >Canyon Ultimate CF SL 7 ETAP</a
+                    ></span
+                >
+            </div>
+        </div>
+        <div id="logs"></div>
+        <script src="script.js"></script>
+    </body>
+</html>
