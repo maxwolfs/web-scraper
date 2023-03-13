@@ -43,6 +43,7 @@ async function scrapeProduct(url) {
                 await sendMessage("🚲");
             } else {
                 console.log("🚳");
+                bot.telegram.sendMessage("🚳");
                 app.get("/", (req, res) => {
                     res.send("🚳");
                 });
