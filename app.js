@@ -61,20 +61,19 @@ const productsToCheck = [
     },
 ];
 
+// TODO: refactor that scrapeProcut receives array
 const productAlarm = new Task("simple task", () => {
-    productsToCheck.forEach((product) => {
-        scrapeProduct(product);
-    });
+    scrapeProduct(productsToCheck);
 });
 const job = new SimpleIntervalJob({ seconds: 10 }, productAlarm);
 
 scheduler.addSimpleIntervalJob(job);
 
-async function scrapeProduct(product) {
+async function scrapeProduct(productsToCheck) {
     try {
         const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
         const page = await browser.newPage();
-        await page.goto(product.url);
+        await page.goto(productsToCheck[0].url);
 
         await checkAvailability();
         await browser.close();
@@ -86,10 +85,10 @@ async function scrapeProduct(product) {
 
             const success =
                 "🚲 – Go get  " +
-                product.title +
+                productsToCheck[0].title +
                 " fast 🎉: ----> " +
-                product.url;
-            const waiting = "🚳 – " + product.title + " not available yet. ⏳";
+                productsToCheck[0].url;
+            const waiting = "🚳 – " + productsToCheck[0].title + " not available yet. ⏳";
             const timestamp = new Date().toISOString();
 
             if (src !== null) {
