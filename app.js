@@ -26,8 +26,10 @@ app.listen(PORT, () => {
 });
 
 // serve the socket.io client script
-app.get('/socket.io/socket.io.js', (req, res) => {
-    res.sendFile(__dirname + '/node_modules/socket.io/client-dist/socket.io.js');
+app.get("/socket.io/socket.io.js", (req, res) => {
+    res.sendFile(
+        __dirname + "/node_modules/socket.io/client-dist/socket.io.js"
+    );
 });
 
 // create a new PostgreSQL connection pool
@@ -40,8 +42,9 @@ const pool = new Pool({
 });
 
 // create a Socket.io instance and attach it to the server
-const io = socketio(server);
-
+const io = socketio(server, {
+    path: "/socket.io",
+});
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.launch();
 
