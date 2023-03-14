@@ -72,22 +72,26 @@ async function scrapeProduct(productsToCheck) {
     try {
         const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
         const page = await browser.newPage();
-        await page.goto(productsToCheck[0].url);
 
-        await checkAvailability();
+        for (const product of productsToCheck) {
+            await page.goto(product.url);
+
+            await checkAvailability(product);
+        }
+
         await browser.close();
 
-        async function checkAvailability() {
+        async function checkAvailability(product) {
             const src = await page.evaluate(() => {
                 return document.querySelector('button[data-product-size="S"]');
             });
 
             const success =
                 "🚲 – Go get  " +
-                productsToCheck[0].title +
+                product.title +
                 " fast 🎉: ----> " +
-                productsToCheck[0].url;
-            const waiting = "🚳 – " + productsToCheck[0].title + " not available yet. ⏳";
+                product.url;
+            const waiting = "🚳 – " + product.title + " not available yet. ⏳";
             const timestamp = new Date().toISOString();
 
             if (src !== null) {
