@@ -29,10 +29,6 @@ const io = socketio(server, {
 app.use(express.static("public"));
 app.use(cors());
 
-app.listen(PORT, () => {
-    console.log(`Our app is running on port ${PORT}`);
-});
-
 // serve the socket.io client script
 app.get("/socket.io/socket.io.js", (req, res) => {
     res.sendFile(
