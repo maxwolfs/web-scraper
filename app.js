@@ -14,12 +14,19 @@ const { getTotalLogs, getFirstLogTimestamp } = require("./helpers");
 const server = http.createServer(app);
 
 // listen for HTTP requests on port 3000
-server.listen(3000, () => {
+server.listen(PORT, () => {
     console.log("Server started on port 3000");
+});
+
+// create a Socket.io instance and attach it to the server
+const io = socketio(server, {
+    path: "/socket.io",
+    cors: { origin: "*" }
 });
 
 // serve static files from the public directory
 app.use(express.static("public"));
+app.use(cors());
 
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${PORT}`);
@@ -41,10 +48,6 @@ const pool = new Pool({
     port: 5432, // default PostgreSQL port
 });
 
-// create a Socket.io instance and attach it to the server
-const io = socketio(server, {
-    path: "/socket.io",
-});
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.launch();
 
