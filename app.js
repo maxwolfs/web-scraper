@@ -22,7 +22,7 @@ server.listen(PORT, () => {
 // create a Socket.io instance and attach it to the server
 const io = socketio(server, {
     path: "/socket.io",
-    cors: { origin: "*" }
+    cors: { origin: "*" },
 });
 
 // serve static files from the public directory
@@ -54,21 +54,31 @@ bot.launch();
 
 const scheduler = new ToadScheduler();
 
-const productUrl =
-    "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01";
+const productsToCheck = [
+    {
+        title: "cf-sl-7-etap",
+        url: "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01",
+    },
+    {
+        title: "cf-sl-8-aero",
+        url: "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01",
+    },
+];
 
 const productAlarm = new Task("simple task", () => {
-    scrapeProduct(productUrl);
+    productsToCheck.forEach((product) => {
+        scrapeProduct(product);
+    });
 });
 const job = new SimpleIntervalJob({ seconds: 10 }, productAlarm);
 
 scheduler.addSimpleIntervalJob(job);
 
-async function scrapeProduct(url) {
+async function scrapeProduct(product) {
     try {
         const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
         const page = await browser.newPage();
-        await page.goto(url);
+        await page.goto(product.url);
 
         await checkAvailability();
         await browser.close();
@@ -78,8 +88,12 @@ async function scrapeProduct(url) {
                 return document.querySelector('button[data-product-size="S"]');
             });
 
-            const success = "🚲 – Go get it fast 🎉: ----> " + url;
-            const waiting = "🚳 – Not available yet. ⏳";
+            const success =
+                "🚲 – Go get  " +
+                product.title +
+                " fast 🎉: ----> " +
+                product.url;
+            const waiting = "🚳 – " + product.title + " not available yet. ⏳";
             const timestamp = new Date().toISOString();
 
             if (src !== null) {
