@@ -54,16 +54,7 @@ scheduler.addSimpleIntervalJob(job);
 
 async function scrapeProduct(url) {
     try {
-        const browserFetcher = puppeteer.createBrowserFetcher();
-
-        let revisionInfo = await browserFetcher.download("1095492");
-
-        const browser = await puppeteer.launch({
-            executablePath: revisionInfo.executablePath,
-            ignoreDefaultArgs: ["--disable-extensions"],
-            headless: true,
-            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-        });
+        const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
         const page = await browser.newPage();
         await page.goto(url);
 
