@@ -16,7 +16,7 @@ const server = http.createServer(app);
 
 // listen for HTTP requests on port 3000
 server.listen(PORT, () => {
-    console.log("Server started on port 3000");
+    console.log(`Server started on port ${PORT}`);
 });
 
 // create a Socket.io instance and attach it to the server
@@ -61,7 +61,6 @@ const productsToCheck = [
     },
 ];
 
-// TODO: refactor that scrapeProcut receives array
 const productAlarm = new Task("simple task", () => {
     scrapeProduct(productsToCheck);
 });
@@ -93,7 +92,7 @@ async function scrapeProduct(productsToCheck) {
 
             if (src !== null) {
                 bot.telegram.sendMessage("@ultimateMalle", success);
-                addLogEntry(timestamp, message);
+                addLogEntry(timestamp, success);
             } else {
                 addLogEntry(timestamp, waiting);
             }
