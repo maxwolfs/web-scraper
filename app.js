@@ -10,9 +10,6 @@ const { Telegraf } = require("telegraf");
 const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
 const { getTotalLogs, getFirstLogTimestamp } = require("./helpers");
 
-// serve static files from the public directory
-app.use(express.static("public"));
-
 // create a server and attach the app to it
 const server = http.createServer(app);
 
@@ -21,8 +18,16 @@ server.listen(3000, () => {
     console.log("Server started on port 3000");
 });
 
+// serve static files from the public directory
+app.use(express.static("public"));
+
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${PORT}`);
+});
+
+// serve the socket.io client script
+app.get('/socket.io/socket.io.js', (req, res) => {
+    res.sendFile(__dirname + '/node_modules/socket.io/client-dist/socket.io.js');
 });
 
 // create a new PostgreSQL connection pool
