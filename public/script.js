@@ -1,6 +1,11 @@
 // create a WebSocket connection to the server
 const socket = io();
 
+window.addEventListener("load", (event) => {
+    updateLogsCount();
+    updateTimeSinceStart();
+});
+
 // add a new log entry to the DOM
 function addLogEntry(timestamp, message) {
     const logsElement = document.getElementById("logs");
