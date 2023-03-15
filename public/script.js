@@ -66,9 +66,10 @@ function updateTimeUntilNextLogEntry() {
             let timeUntilNextLogEntry;
             let countdown;
             setInterval(function () {
+                console.log(countdown);
                 now = new Date();
                 timeUntilNextLogEntry =
-                    Math.floor((now - latestTimestampTime) / 1000 - 3600) + 2;
+                    Math.floor((now - latestTimestampTime) / 1000) + 2;
                 countdown = 60 - (timeUntilNextLogEntry % 60);
                 timeUntilElement.innerText = `${countdown}`;
             }, 1000);
