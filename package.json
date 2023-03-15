@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/maxwolfs/rd9-scraper#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "puppeteer": "^7.0.1",
+    "pg": "^8.10.0",
+    "puppeteer": "19.7.4",
+    "socket.io": "^4.6.1",
     "telegraf": "^4.0.3",
     "toad-scheduler": "^1.0.2"
   }

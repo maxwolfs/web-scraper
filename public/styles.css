@@ -1,0 +1,54 @@
+body {
+    background-color: #21243a;
+    color: #839496;
+    font-family: Menlo, Consolas;
+    font-size: 8px;
+}
+
+::selection {
+    color: #93a1a1;
+    background: #073642;
+}
+
+#logs {
+    height: 100%;
+    overflow-y: scroll;
+    padding: 16px;
+}
+
+.log-entry {
+    margin-bottom: 10px;
+}
+
+.log-timestamp {
+    color: #073642;
+    background-color: #fdf6e3;
+}
+
+.log-message {
+    margin-left: 16px;
+    color: #839496;
+}
+
+.container {
+    color: #fdf6e3;
+    display: flex;
+    padding: 16px;
+}
+
+.box {
+    margin-right: 40px;
+}
+p {
+    color: #839496;
+}
+
+a {
+    color: #fdf6e3;
+}
+
+button {
+    border: none;
+    background: none;
+    padding: 0;
+}
