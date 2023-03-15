@@ -2,18 +2,47 @@ body {
     background-color: #21243a;
     color: #839496;
     font-family: Menlo, Consolas;
-    font-size: 8px;
-}
-
-::selection {
-    color: #93a1a1;
-    background: #073642;
+    font-size: 16px;
 }
 
 #logs {
     height: 100%;
     overflow-y: scroll;
-    padding: 16px;
+    padding: 20px;
+}
+
+.log-message {
+    margin-left: 20px;
+    color: #839496;
+}
+
+.container {
+    color: #fdf6e3;
+    display: flex;
+    padding: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 8px;
+    }
+
+    #logs {
+        padding: 16px;
+    }
+
+    .log-message {
+        margin-left: 16px;
+    }
+
+    .container {
+        padding: 16px;
+    }
+}
+
+::selection {
+    color: #93a1a1;
+    background: #073642;
 }
 
 .log-entry {
@@ -23,17 +52,6 @@ body {
 .log-timestamp {
     color: #073642;
     background-color: #fdf6e3;
-}
-
-.log-message {
-    margin-left: 16px;
-    color: #839496;
-}
-
-.container {
-    color: #fdf6e3;
-    display: flex;
-    padding: 16px;
 }
 
 .box {
