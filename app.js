@@ -52,12 +52,12 @@ const scheduler = new ToadScheduler();
 
 const productsToCheck = [
     {
-        title: "cf-sl-7-etap",
+        title: "cf-sl-7-etap-s",
         url: "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01",
     },
     {
-        title: "cf-sl-8-aero",
-        url: "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-7-etap/3318.html?dwvar_3318_pv_rahmenfarbe=R101_P01",
+        title: "cf-sl-8-aero-s",
+        url: "https://www.canyon.com/de-de/rennrad/race-rennrad/ultimate/cf-sl/ultimate-cf-sl-8-aero/3319.html?dwvar_3319_pv_rahmenfarbe=R101_P01",
     },
 ];
 
@@ -151,6 +151,16 @@ app.get("/logs/count", async (req, res) => {
 app.get("/logs/first-timestamp", async (req, res) => {
     try {
         const timestamp = await getFirstLogTimestamp(pool);
+        res.json({ timestamp });
+    } catch (err) {
+        res.status(500).json({ error: "Error getting first log timestamp" });
+    }
+});
+
+// Route to get the timestamp of the latest log entry
+app.get("/logs/latest-timestamp", async (req, res) => {
+    try {
+        const timestamp = await getLatestLogTimestamp(pool);
         res.json({ timestamp });
     } catch (err) {
         res.status(500).json({ error: "Error getting first log timestamp" });

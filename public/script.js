@@ -4,6 +4,7 @@ const socket = io();
 window.addEventListener("load", (event) => {
     updateLogsCount();
     updateTimeSinceStart();
+    updateTimeUntilNextLogEntry();
 });
 
 // add a new log entry to the DOM
@@ -28,6 +29,7 @@ socket.on("logEntry", ({ timestamp, message }) => {
     addLogEntry(timestamp, message);
     updateLogsCount();
     updateTimeSinceStart();
+    updateTimeUntilNextLogEntry();
 });
 
 function updateTimeSinceStart() {
@@ -51,6 +53,24 @@ function updateLogsCount() {
             const countEntryElement = document.createElement("span");
             countElement.innerText = `${data.count} `;
             countElement.appendChild(countEntryElement);
+        })
+        .catch((error) => console.error(error));
+}
+
+function updateTimeUntilNextLogEntry() {
+    fetch("/logs/latest-timestamp")
+        .then((response) => response.json())
+        .then((data) => {
+            setInterval(function () {
+                const now = new Date().getTime();
+                const latestTimestampTime = data.timestamp.getTime();
+                let timeUntilNextLogEntry = now - latestTimestampTime;
+                const timeUntilElement = document.getElementById("next");
+                const timeUntilEntryElement = document.createElement("span");
+                const time = timeUntilNextLogEntry;
+                timeUntilElement.innerText = `${time} `;
+                timeUntilElement.appendChild(timeUntilEntryElement);
+            }, 1000);
         })
         .catch((error) => console.error(error));
 }
