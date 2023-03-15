@@ -29,7 +29,7 @@ async function getFirstLogTimestamp(pool) {
 // Helper function to get the timestamp of the first log entry
 async function getLatestLogTimestamp(pool) {
     const query = {
-        text: "SELECT timestamp FROM logs ORDER BY timestamp DSC LIMIT 1",
+        text: "SELECT timestamp FROM logs ORDER BY timestamp DESC LIMIT 1",
     };
     try {
         const result = await pool.query(query);
@@ -42,4 +42,5 @@ async function getLatestLogTimestamp(pool) {
 module.exports = {
     getTotalLogs,
     getFirstLogTimestamp,
+    getLatestLogTimestamp
 };

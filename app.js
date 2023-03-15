@@ -9,7 +9,11 @@ const socketio = require("socket.io");
 const puppeteer = require("puppeteer");
 const { Telegraf } = require("telegraf");
 const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
-const { getTotalLogs, getFirstLogTimestamp } = require("./helpers");
+const {
+    getTotalLogs,
+    getFirstLogTimestamp,
+    getLatestLogTimestamp,
+} = require("./helpers");
 
 // create a server and attach the app to it
 const server = http.createServer(app);

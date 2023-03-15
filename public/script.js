@@ -29,7 +29,6 @@ socket.on("logEntry", ({ timestamp, message }) => {
     addLogEntry(timestamp, message);
     updateLogsCount();
     updateTimeSinceStart();
-    updateTimeUntilNextLogEntry();
 });
 
 function updateTimeSinceStart() {
@@ -61,15 +60,17 @@ function updateTimeUntilNextLogEntry() {
     fetch("/logs/latest-timestamp")
         .then((response) => response.json())
         .then((data) => {
+            const latestTimestampTime = new Date(data.timestamp);
+            const timeUntilElement = document.getElementById("next");
+            let now;
+            let timeUntilNextLogEntry;
+            let countdown;
             setInterval(function () {
-                const now = new Date().getTime();
-                const latestTimestampTime = data.timestamp.getTime();
-                let timeUntilNextLogEntry = now - latestTimestampTime;
-                const timeUntilElement = document.getElementById("next");
-                const timeUntilEntryElement = document.createElement("span");
-                const time = timeUntilNextLogEntry;
-                timeUntilElement.innerText = `${time} `;
-                timeUntilElement.appendChild(timeUntilEntryElement);
+                now = new Date();
+                timeUntilNextLogEntry =
+                    Math.floor((now - latestTimestampTime) / 1000 - 3600) + 2;
+                countdown = 60 - (timeUntilNextLogEntry % 60);
+                timeUntilElement.innerText = `${countdown}`;
             }, 1000);
         })
         .catch((error) => console.error(error));
