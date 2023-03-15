@@ -45,5 +45,10 @@ p {
 
 a {
     color: #fdf6e3;
-    cursor: grab;
+}
+
+button {
+    border: none;
+    background: none;
+    padding: 0;
 }
