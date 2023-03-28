@@ -99,7 +99,7 @@ async function scrapeProduct(productsToCheck) {
             const timestamp = new Date().toISOString();
 
             if (src !== null) {
-                bot.telegram.sendMessage("@ultimateMalle", success);
+                // bot.telegram.sendMessage("@ultimateMalle", success); Mute bot for now
                 addLogEntry(timestamp, success);
             } else {
                 addLogEntry(timestamp, waiting);
